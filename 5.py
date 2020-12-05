@@ -55,6 +55,6 @@ print("Highest Seat ID: " + str(highest))
 seats.sort()
 for i in range(0,len(seats)):
     if seats[i] - seats[i-1] == 2:
-        print(str(seats[i-1]) + " " + str(seats[i]))
+        print("Your Seat: " + (str(seats[i] - 1)))
 
 
