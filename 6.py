@@ -1,4 +1,5 @@
-# This code is trash
+# This code is trash. Going to record timestamps here because I'm trying to speedrun these
+# 11:17 PM - 11:39 PM
 
 dataset = open('6.txt', 'r').read()
 groups = dataset.split("\n\n")
