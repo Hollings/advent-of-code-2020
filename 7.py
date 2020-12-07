@@ -1,4 +1,5 @@
 # Recursion is really hard at nearly midnight on a sunday... but I got it
+# I ended up just deleting a ton of my part 1 code, so this just solves part 2
 # 10:00 PM - 11:40 PM
 
 # light red bags contain 1 bright white bag, 2 muted yellow bags.
@@ -27,84 +28,28 @@ def parseinput():
             color = " ".join(words[1:3])
             finalRules[bagColor][color] = int(q)
     return finalRules
-
 rules = parseinput()
-print("parsed rulse")
+
 class Bag:
-    def __init__(self, color, depth = 0):
+    def __init__(self, color):
         self.color = color
-        self.depth = depth
         self.children = []
         self.populateChildren()
         self.childCount = 0
-        # self.countChildren()
-        # self.parents = []
-        # self.populateParents()
-        # if self.depth > 10:
-        #     return
-        # else:
-        self.depth+=1
-
-    def populateParents(self):
-        for color, rule in rules.items():
-            for bag, quantity in rule.items():
-
-                if bag == self.color:
-                    self.parents.append(color)
-        self.parents = list(dict.fromkeys(self.parents))
-
-
-
-    def listPossibleParents(self, depth, colorList = [], bag = None):
-        depth += 1
-        if depth > 20:
-            return colorList
-        if bag == None:
-            bag = self
-        colorList.append(bag.color)
-
-        for parentColor in bag.parents:
-            if parentColor not in colorList:
-                parent = Bag(parentColor, depth)
-                newColors = self.listPossibleParents(depth, colorList, parent)
-                if newColors != None:
-                    colorList.extend(newColors)
-        return list(dict.fromkeys(colorList))
 
     def populateChildren(self):
+        """
+        Recursively create child tree
+        """
         for key, value in rules.items():
             if self.color == key:
                 for color, quantity in value.items():
-                    self.children.extend(Bag(color, self.depth) for _ in range(quantity))
+                    self.children.extend(Bag(color) for _ in range(quantity))
 
     def countChildren(self, count = 0):
         for child in self.children:
             count += child.countChildren() + 1
         return count
 
-    def hasGold(self):
-        for bag in self.children:
-            if bag.color == 'sg':
-                return True
-        return False
-
-    def canContainGold(self, depth = 0):
-
-        for bag in self.children:
-            if bag.hasGold():
-                return True
-            if bag.children == []:
-                return False
-            if depth > 10:
-                return False
-            depth+=1
-            bag.canContainGold(depth)
-
-bag = Bag('shiny gold', 0)
-# print(len(bag.listPossibleParents(0)))
+bag = Bag('shiny gold')
 print(bag.countChildren())
-# answer = 0
-# for color in colors:
-#     bag = Bag(color, 0)
-#     if bag.canContainGold():
-#         answer+=1
