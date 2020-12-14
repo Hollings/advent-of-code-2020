@@ -1,19 +1,39 @@
 from math import gcd
+
 data = open('13.txt').read().splitlines()
-data = ["939", "3,5,7,13"]
-
-
+# data = ["939", "17,x,13,19"]
 
 
 # Second day of attempting this...
+########
+########
+########
+def lcm(a, b):
+    return a * b / gcd(a, b)
 
+busData = data[1].split(",")
+busPosVals = {}
 
+for b in busData:
+    # part 1
+    # if b != "x":
+    if b.isnumeric():
+        busPosVals[int(busData.index(b))] = int(b)
 
+print(busPosVals)
+position, currentTime = 1, 0
+for busId, busTime in busPosVals.items():
+    print(f"{busId}, {busTime}")
+    while True:
+        if (busId + currentTime) % busTime == 0: break
+        print(f"{currentTime} {position}")
+        currentTime += position
+    position *= busTime
+print('Part 2:', currentTime)
 
-
-
-
-
+exit()
+########
+########
 ########
 
 
@@ -29,18 +49,14 @@ for b in data[1].split(","):
         latestBus = int(b)
 
 busNums = []
-i =0
+i = 0
 for bus in buses:
     if bus.isnumeric():
         busNums.append(int(bus) + i)
-    i+=1
+    i += 1
 
 print(busNums)
-def lcm(a):
-    lcm = a[0]
-    for i in a[1:]:
-        lcm = lcm * i // gcd(lcm, i)
-    return(lcm)
+
 print(lcm(busNums))
 # print(lcm(busNums) / 2)
 
@@ -51,17 +67,13 @@ print(lcm(busNums))
 
 1 * 1
 2 * 1
+
+
 # 1,2 -> 1
 # 1,5 -> 4
 # 1,10 -> 9
 # 1,x,10 -> 8
 # 2,3,4 -> 2
-
-
-
-
-
-
 
 
 # buses = sorted(buses)
@@ -96,7 +108,9 @@ def part2():
             else:
                 # print("NO " + str(buses[b]))
                 found = False
-            b+=1
+            b += 1
         time += 1
-    print(time-1)
+    print(time - 1)
+
+
 part2()
